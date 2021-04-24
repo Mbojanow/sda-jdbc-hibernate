@@ -17,6 +17,7 @@ public class JdbcHibernateInitApplication {
 
     try (final Connection connection = dataSource.getConnection()) {
       createUsersTableIfNotExists(connection);
+      createUserIfNotExists(connection, "Michal", "test@test.com", "Password_123");
       printAllUsers(connection);
 
     } catch (SQLException exp) {
@@ -28,11 +29,35 @@ public class JdbcHibernateInitApplication {
     try (Statement statement = connection.createStatement()) {
       boolean execute = statement.execute("CREATE TABLE IF NOT EXISTS users(" +
           "id INTEGER PRIMARY KEY AUTO_INCREMENT, " +
-          "name VARCHAR(255) NOT NULL," +
+          "uname VARCHAR(255) NOT NULL," +
           "email VARCHAR(127) NOT NULL," +
           "password VARCHAR(100) NOT NULL" +
           ")");
       System.out.println("Table users created");
+    } catch (SQLException exp) {
+      exp.printStackTrace();
+    }
+  }
+
+  private static void createUserIfNotExists(Connection connection, String name, String email, String password) {
+    if (!userExists(connection, name, email)) {
+      createUser(connection, name, email, password);
+    }
+  }
+
+  private static boolean userExists(Connection connection, String name, String email) {
+    try (Statement statement = connection.createStatement()) {
+      return statement.executeQuery("SELECT * FROM users u WHERE u.uname = '" + name + "' AND u.email = '" + email +"'").next();
+    } catch (SQLException exp) {
+      exp.printStackTrace();
+    }
+    return false;
+  }
+
+  private static void createUser(Connection connection, String name, String email, String password) {
+    try (Statement statement = connection.createStatement()) {
+      int res = statement.executeUpdate("INSERT INTO users(uname, email, password) VALUES ('" + name + "','" + email + "','" + password + "')");
+      System.out.println("INSERT RESULT " + res);
     } catch (SQLException exp) {
       exp.printStackTrace();
     }
