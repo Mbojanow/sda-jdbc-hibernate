@@ -16,7 +16,27 @@ public class JdbcHibernateInitApplication {
       createUsersTableIfNotExists(connection);
       createUserIfNotExists(connection, "Michal", "test@test.com", "Password_123");
       printAllUsers(connection);
+      printAllUsersWithName(connection, "Michal");
 
+    } catch (SQLException exp) {
+      exp.printStackTrace();
+    }
+  }
+
+  private static void printAllUsersWithName(final Connection connection, final String name) {
+    try (CallableStatement statement = connection.prepareCall("CALL GetUserByName(?)")) {
+      statement.setString(1, name);
+      boolean hasResultSet = statement.execute();
+      if (hasResultSet) {
+        ResultSet resultSet = statement.getResultSet();
+        while (resultSet.next()) {
+          int id = resultSet.getInt(1);
+          String fetchedName = resultSet.getString(2);
+          String email = resultSet.getString(3);
+          String password = resultSet.getString(4);
+          System.out.println("id=" + id + ", name=" + fetchedName + ", email=" + email + ", password=" + password);
+        }
+      }
     } catch (SQLException exp) {
       exp.printStackTrace();
     }
