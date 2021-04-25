@@ -12,9 +12,10 @@ import java.util.List;
 public class JdbcHibernateInitApplication {
 
   public static void main(String[] args) {
-    final SessionFactory sessionFactory = new Configuration()
-        .configure("hibernate.cfg.xml")
-        .buildSessionFactory();
+    Configuration configuration = new Configuration()
+        .addAnnotatedClass(Car.class)
+        .configure("hibernate.cfg.xml");
+    SessionFactory sessionFactory = configuration.buildSessionFactory();
 
 
     try (Session session = sessionFactory.openSession()) {
@@ -35,6 +36,11 @@ public class JdbcHibernateInitApplication {
       for (var row : resultList) {
         System.out.println(row[0] + " " + row[1] + " " + row[2]);
       }
+
+      List<Car> cars = session.createQuery("SELECT c FROM Car c", Car.class).getResultList();
+      session.persist(new Car(null, "VW", "Golf"));
+      cars.forEach(System.out::println);
+
 
       if (rowsInserted == 1) {
         transaction.commit();
