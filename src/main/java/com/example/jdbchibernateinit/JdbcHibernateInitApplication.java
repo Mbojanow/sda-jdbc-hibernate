@@ -2,10 +2,7 @@ package com.example.jdbchibernateinit;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class JdbcHibernateInitApplication {
 
@@ -46,8 +43,10 @@ public class JdbcHibernateInitApplication {
   }
 
   private static boolean userExists(Connection connection, String name, String email) {
-    try (Statement statement = connection.createStatement()) {
-      return statement.executeQuery("SELECT * FROM users u WHERE u.uname = '" + name + "' AND u.email = '" + email +"'").next();
+    try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM users u WHERE u.uname = ? AND u.email = ?")) {
+      statement.setString(1, name);
+      statement.setString(2, email);
+      return statement.executeQuery().next();
     } catch (SQLException exp) {
       exp.printStackTrace();
     }
@@ -55,8 +54,11 @@ public class JdbcHibernateInitApplication {
   }
 
   private static void createUser(Connection connection, String name, String email, String password) {
-    try (Statement statement = connection.createStatement()) {
-      int res = statement.executeUpdate("INSERT INTO users(uname, email, password) VALUES ('" + name + "','" + email + "','" + password + "')");
+    try (PreparedStatement statement = connection.prepareStatement("INSERT INTO users(uname, email, password) VALUES (?, ?, ?)")) {
+      statement.setString(1, name);
+      statement.setString(2, email);
+      statement.setString(3, password);
+      int res = statement.executeUpdate();
       System.out.println("INSERT RESULT " + res);
     } catch (SQLException exp) {
       exp.printStackTrace();
