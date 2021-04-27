@@ -14,11 +14,18 @@ public class JdbcHibernateInitApplication {
   public static void main(String[] args) {
     Configuration configuration = new Configuration()
         .addAnnotatedClass(Car.class)
+        .addAnnotatedClass(User.class)
+        .addAnnotatedClass(UserDetails.class)
         .configure("hibernate.cfg.xml");
     SessionFactory sessionFactory = configuration.buildSessionFactory();
 
 
     try (Session session = sessionFactory.openSession()) {
+      UserRepository userRepository = new UserRepository(session);
+//      UserDetails details = new UserDetails(null, "oskarx", "123-123-123");
+//      userRepository.save(new User("andrzej2", "test@test.com", "andrzej", "andrzejewski", details));
+      User andrzej = session.find(User.class, "andrzej");
+
       NativeQuery<Object[]> nativeQuery = session.createNativeQuery("SELECT SYSDATE(), DATABASE()");
       Object[] singleResult = nativeQuery.getSingleResult();
       Timestamp timestamp = (Timestamp)singleResult[0];
