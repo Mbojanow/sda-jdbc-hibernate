@@ -16,6 +16,9 @@ public class JdbcHibernateInitApplication {
 
     UsersQueries usersQueries = new UsersQueries(dataSource);
     usersQueries.createUsersTableIfNotExists();
+    usersQueries.createUserIfNotExists("Andrzej", "andrzej@test.com", "Andrzej_123");
+    usersQueries.createUserIfNotExists("Ala", "ala@test.com", "Ala_123");
+    usersQueries.printAllUsers();
 
 //    try(Connection connection = dataSource.getConnection()) {
 //
