@@ -1,19 +1,27 @@
 package com.example.jdbchibernateinit;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JdbcHibernateInitApplication {
 
   public static void main(String[] args) {
 
-    try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/information_schema",
-            "root", "example")) {
+    MysqlDataSource dataSource = new MysqlDataSource();
+    dataSource.setUrl("jdbc:mysql://localhost:3307/sda_users");
+    dataSource.setUser("root");
+    dataSource.setPassword("example");
 
-    } catch (SQLException exp) {
-      exp.printStackTrace();
-    }
+    UsersQueries usersQueries = new UsersQueries(dataSource);
+    usersQueries.createUsersTableIfNotExists();
+
+//    try(Connection connection = dataSource.getConnection()) {
+//
+//    } catch (SQLException exp) {
+//      exp.printStackTrace();
+//    }
   }
 
 }
