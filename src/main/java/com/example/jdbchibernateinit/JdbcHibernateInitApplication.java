@@ -14,17 +14,31 @@ public class JdbcHibernateInitApplication {
     dataSource.setUser("root");
     dataSource.setPassword("example");
 
-    UsersQueries usersQueries = new UsersQueries(dataSource);
-    usersQueries.createUsersTableIfNotExists();
-    usersQueries.createUserIfNotExists("Andrzej", "andrzej@test.com", "Andrzej_123");
-    usersQueries.createUserIfNotExists("Ala", "ala@test.com", "Ala_123");
-    usersQueries.printAllUsers();
-
+    try (Connection connection = dataSource.getConnection()) {
+      AddressRepository addressRepository = new AddressRepository(connection);
+      addressRepository.createAddressTable();
+    } catch (SQLException exp) {
+      exp.printStackTrace();
+    }
 //    try(Connection connection = dataSource.getConnection()) {
 //
 //    } catch (SQLException exp) {
 //      exp.printStackTrace();
 //    }
+  }
+
+  private static void executeUsersQueries(MysqlDataSource dataSource) {
+    UsersQueries usersQueries = new UsersQueries(dataSource);
+    usersQueries.createUsersTableIfNotExists();
+    usersQueries.createUserIfNotExists("Andrzej", "andrzej@test.com", "Andrzej_123");
+    usersQueries.createUserIfNotExists("Ala", "ala@test.com", "Ala_123");
+
+    usersQueries.createUserIfNotExists("Ala", "ala2@test.com", "Ala_123");
+    usersQueries.createUserIfNotExists("Ala", "ala3@test.com", "Ala_123");
+    //usersQueries.createSearchUserByNameProcedure();
+    usersQueries.printAllUsers();
+    usersQueries.printUsersWithName("Ala");
+
   }
 
 }
