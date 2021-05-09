@@ -36,11 +36,18 @@ public class JdbcHibernateInitApplication {
       System.out.println("Toyota cars number " + carRepository.findCarsByProducer("Toyota"));
       carRepository.deleteById(1);
 
+      final UserDetails userDetails = new UserDetails(null, "andrzej", "123123123");
+      session.persist(userDetails);
+      final User user = new User("andrzej", "andrzej", "andrzejewski", "andrzej@test.com",
+              userDetails);
+      session.persist(user);
+
       transaction.commit();
     } catch (Exception e) {
       if (transaction != null) {
         transaction.rollback();
       }
+      e.printStackTrace();
     }
 
 
