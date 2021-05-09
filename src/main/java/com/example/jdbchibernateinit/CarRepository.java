@@ -1,8 +1,10 @@
 package com.example.jdbchibernateinit;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
 
+// DAO - CarDAO - Data Access Object
 public class CarRepository {
 
     private final EntityManager entityManager;
@@ -34,6 +36,24 @@ public class CarRepository {
     public void delete(Car car) {
         // DELETE FROM cars WHERE id = ?
         entityManager.remove(car);
+    }
+
+    public List<Car> findAll() {
+        return entityManager.createQuery("SELECT c FROM cars c", Car.class)
+                .getResultList();
+    }
+
+    public List<Car> findCarsByProducer(String producer) {
+        // c.manufacturer -> wskazuje nazwę pola java
+        return entityManager.createQuery("SELECT c FROM cars c WHERE c.manufacturer = :producer", Car.class)
+                .setParameter("producer", producer)
+                .getResultList();
+    }
+
+    public void deleteById(Integer id) {
+        entityManager.createQuery("DELETE FROM cars c WHERE c.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
 }

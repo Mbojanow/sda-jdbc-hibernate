@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity(name = "cars")
+//@Table(name = "cars") -> zmienia sposob wskazania nazwy w HQL
 @Data // gettery, settery, equals i hashcode
 @NoArgsConstructor
 @AllArgsConstructor
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue // domyślnie AUTO -> wybiera pomiędzy IDENTITY, SEQUENCE, TABLE na podstawie drivera -> SEQUENCE dla MySQLA
     private Integer id;
 
     @Column(name = "manufacturer")

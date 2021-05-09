@@ -14,6 +14,8 @@ public class JdbcHibernateInitApplication {
   public static void main(String[] args) {
     SessionFactory sessionFactory = new Configuration()
             .addAnnotatedClass(Car.class)
+            .addAnnotatedClass(User.class)
+            .addAnnotatedClass(UserDetails.class)
             .configure("hibernate.cfg.xml")
             .buildSessionFactory();
 
@@ -29,6 +31,11 @@ public class JdbcHibernateInitApplication {
       car.setModelName("Megane");
       //carRepository.updateCar(car);
       //carRepository.delete(car);
+
+      System.out.println("Number of records " + carRepository.findAll().size());
+      System.out.println("Toyota cars number " + carRepository.findCarsByProducer("Toyota"));
+      carRepository.deleteById(1);
+
       transaction.commit();
     } catch (Exception e) {
       if (transaction != null) {
