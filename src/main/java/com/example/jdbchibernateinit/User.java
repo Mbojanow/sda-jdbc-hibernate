@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity(name = "users")
 @Data
@@ -27,6 +24,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @OneToOne
+    // jeżeli decydujemy się na PERSIST - prawie zawsze dodajemy też MERGE
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private UserDetails userDetails;
 }

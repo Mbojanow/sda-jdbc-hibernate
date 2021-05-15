@@ -20,4 +20,8 @@ public class UserRepository {
             return Optional.empty();
         }
     }
+
+    public Optional<User> findById(String username) {
+        return Optional.ofNullable(entityManager.find(User.class, username));
+    }
 }

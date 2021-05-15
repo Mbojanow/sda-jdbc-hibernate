@@ -23,8 +23,14 @@ public class JdbcHibernateInitApplication {
     try (Session session = sessionFactory.openSession()) {
       transaction = session.beginTransaction();
 
+//      UserDetails userDetails = new UserDetails(null, "Ola", "123123123");
+//      final User user = new User("ala", "Ala", "Alanska", "ala@test.com", userDetails);
+//      session.persist(user);
+
       UserRepository userRepository = new UserRepository(session);
-      userRepository.findWithDetailsById("andrzej");
+      //userRepository.findWithDetailsById("andrzej");
+      // 1 to 1 - hibernate jest 'sprytny' i sam pobiera zależną encję;
+      userRepository.findById("ala");
 
       transaction.commit();
     } catch (Exception e) {
