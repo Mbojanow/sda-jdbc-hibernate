@@ -17,6 +17,7 @@ public class JdbcHibernateInitApplication {
   public static void main(String[] args) {
     SessionFactory sessionFactory = new Configuration()
             .addAnnotatedClass(Car.class)
+            //.addAnnotatedClass(Group.class)
             .addAnnotatedClass(User.class)
             .addAnnotatedClass(UserDetails.class)
             .addAnnotatedClass(Product.class)
@@ -43,9 +44,9 @@ public class JdbcHibernateInitApplication {
 //      user.setProducts(List.of(product));
 //      session.persist(user);
 
-      UserRepository userRepository = new UserRepository(session);
-      final Optional<User> user = userRepository.findByIdWithProducts("Michal");
-      System.out.println(user.get().getProducts());
+//      UserRepository userRepository = new UserRepository(session);
+//      final Optional<User> user = userRepository.findByIdWithProducts("Michal");
+//      System.out.println(user.get().getProducts());
 
       transaction.commit();
     } catch (Exception e) {

@@ -1,8 +1,6 @@
 package com.example.jdbchibernateinit;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,6 +28,8 @@ public class User {
     private UserDetails userDetails;
 
     //user może mieć wiele produktów
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Product> products;
