@@ -23,6 +23,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
+
     // jeżeli decydujemy się na PERSIST - prawie zawsze dodajemy też MERGE
     @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private UserDetails userDetails;

@@ -30,4 +30,16 @@ public class Group {
                                                                                // nazwa POLA z @Id w klasie User
         inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "username"))
     private List<User> users;
+
+    // robimy to czasami - czyli nadpisanie settera w relacji X - X
+    public void setUsers(List<User> users) {
+        this.users = users;
+        for (User user : users) {
+            if (user.getGroups() == null) {
+                user.setGroups(List.of(this));
+            } else {
+                user.getGroups().add(this);
+            }
+        }
+    }
 }

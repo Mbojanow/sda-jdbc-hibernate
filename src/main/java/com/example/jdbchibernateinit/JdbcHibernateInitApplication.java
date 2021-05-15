@@ -44,9 +44,11 @@ public class JdbcHibernateInitApplication {
       UserRepository userRepository = new UserRepository(session);
       final Optional<User> user = userRepository.findByIdWithProducts("Michal");
 
-      User user2 = new User("ola2", "Ola", "Ola", "ola@test.com", null, null, null);
+      User user2 = new User("ola3", "Ola", "Ola", "ola@test.com", UserType.CLIENT,
+              null, null, null);
       session.persist(user2);
-      Group group = new Group(null, "g2", "group2", List.of(user2));
+      Group group = new Group(null, "g3", "group3", null);
+      group.setUsers(List.of(user2));
       session.persist(group);
 
       if (user2.getGroups() == null) {

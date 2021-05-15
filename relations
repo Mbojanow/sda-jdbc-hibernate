@@ -1,0 +1,7 @@
+A - B
+@ManyToMany na A, tzn. A widzi List<B> bs
+
+SELECT a FROM FROM A a left join a.bs
+
+NIE móhłbym
+SELECT b FROM B b left join b.?
