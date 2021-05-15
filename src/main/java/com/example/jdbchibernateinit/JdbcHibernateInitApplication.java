@@ -10,6 +10,7 @@ import org.hibernate.query.NativeQuery;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JdbcHibernateInitApplication {
 
@@ -42,9 +43,9 @@ public class JdbcHibernateInitApplication {
 //      user.setProducts(List.of(product));
 //      session.persist(user);
 
-      final User user = session.find(User.class, "Michal");
-      final List<Product> products = user.getProducts();
-      System.out.println(products);
+      UserRepository userRepository = new UserRepository(session);
+      final Optional<User> user = userRepository.findByIdWithProducts("Michal");
+      System.out.println(user.get().getProducts());
 
       transaction.commit();
     } catch (Exception e) {
