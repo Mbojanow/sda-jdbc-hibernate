@@ -16,6 +16,7 @@ public class JdbcHibernateInitApplication {
             .addAnnotatedClass(Car.class)
             .addAnnotatedClass(User.class)
             .addAnnotatedClass(UserDetails.class)
+            .addAnnotatedClass(Product.class)
             .configure("hibernate.cfg.xml")
             .buildSessionFactory();
 

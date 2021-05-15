@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "users")
 @Data
@@ -27,4 +28,8 @@ public class User {
     // jeżeli decydujemy się na PERSIST - prawie zawsze dodajemy też MERGE
     @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private UserDetails userDetails;
+
+    //user może mieć wiele produktów
+    @OneToMany
+    private List<Product> products;
 }
