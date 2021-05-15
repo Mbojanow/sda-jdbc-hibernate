@@ -22,25 +22,9 @@ public class JdbcHibernateInitApplication {
     Transaction transaction = null;
     try (Session session = sessionFactory.openSession()) {
       transaction = session.beginTransaction();
-      CarRepository carRepository = new CarRepository(session);
-      carRepository.findById(1).ifPresent(System.out::println);
 
-      // managed - dzięki temu zmiany encji NIE wymagaja wywołania merge na EntityManager
-      final Car car = carRepository.createCar(new Car(null, "Renault", "Clio"));
-      System.out.println(car);
-      car.setModelName("Megane");
-      //carRepository.updateCar(car);
-      //carRepository.delete(car);
-
-      System.out.println("Number of records " + carRepository.findAll().size());
-      System.out.println("Toyota cars number " + carRepository.findCarsByProducer("Toyota"));
-      carRepository.deleteById(1);
-
-      final UserDetails userDetails = new UserDetails(null, "andrzej", "123123123");
-      session.persist(userDetails);
-      final User user = new User("andrzej", "andrzej", "andrzejewski", "andrzej@test.com",
-              userDetails);
-      session.persist(user);
+      UserRepository userRepository = new UserRepository(session);
+      userRepository.findWithDetailsById("andrzej");
 
       transaction.commit();
     } catch (Exception e) {
