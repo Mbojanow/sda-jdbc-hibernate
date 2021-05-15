@@ -8,6 +8,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.NativeQuery;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JdbcHibernateInitApplication {
 
@@ -28,10 +30,17 @@ public class JdbcHibernateInitApplication {
 //      final User user = new User("ala", "Ala", "Alanska", "ala@test.com", userDetails);
 //      session.persist(user);
 
-      UserRepository userRepository = new UserRepository(session);
-      //userRepository.findWithDetailsById("andrzej");
-      // 1 to 1 - hibernate jest 'sprytny' i sam pobiera zależną encję;
-      userRepository.findById("ala");
+//      UserRepository userRepository = new UserRepository(session);
+//      //userRepository.findWithDetailsById("andrzej");
+//      // 1 to 1 - hibernate jest 'sprytny' i sam pobiera zależną encję;
+//      userRepository.findById("ala");
+
+      User user = new User("Michal", "Michal", "Michal", "michal@test.com", null, new ArrayList<>());
+      Product product = new Product("p1", "Product 1");
+      session.persist(product);
+      // powiązanie user <-> product
+      user.setProducts(List.of(product));
+      session.persist(user);
 
       transaction.commit();
     } catch (Exception e) {

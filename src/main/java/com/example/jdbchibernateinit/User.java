@@ -31,5 +31,6 @@ public class User {
 
     //user może mieć wiele produktów
     @OneToMany
+    @JoinColumn(name = "user_id")
     private List<Product> products;
 }

@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.UUID;
 
 @Entity(name = "products")
 @Data
@@ -16,9 +15,14 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Product {
 
+    public Product(String shortName, String longName) {
+        this.shortName = shortName;
+        this.longName = longName;
+    }
+
     @Id
     @GeneratedValue
-    private UUID id;
+    private Integer id;
 
     @Column(name = "short_name")
     private String shortName;
