@@ -28,5 +28,6 @@ public class Product {
     private String longName;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 }

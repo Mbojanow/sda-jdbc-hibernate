@@ -30,7 +30,6 @@ public class User {
     //user może mieć wiele produktów
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Product> products;
 }

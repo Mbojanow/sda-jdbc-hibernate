@@ -5,11 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.NativeQuery;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class JdbcHibernateInitApplication {
@@ -17,7 +13,7 @@ public class JdbcHibernateInitApplication {
   public static void main(String[] args) {
     SessionFactory sessionFactory = new Configuration()
             .addAnnotatedClass(Car.class)
-            //.addAnnotatedClass(Group.class)
+            .addAnnotatedClass(Group.class)
             .addAnnotatedClass(User.class)
             .addAnnotatedClass(UserDetails.class)
             .addAnnotatedClass(Product.class)
@@ -44,9 +40,8 @@ public class JdbcHibernateInitApplication {
 //      user.setProducts(List.of(product));
 //      session.persist(user);
 
-//      UserRepository userRepository = new UserRepository(session);
-//      final Optional<User> user = userRepository.findByIdWithProducts("Michal");
-//      System.out.println(user.get().getProducts());
+      UserRepository userRepository = new UserRepository(session);
+      final Optional<User> user = userRepository.findByIdWithProducts("Michal");
 
       transaction.commit();
     } catch (Exception e) {
