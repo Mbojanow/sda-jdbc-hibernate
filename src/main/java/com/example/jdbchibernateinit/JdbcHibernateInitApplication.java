@@ -23,7 +23,7 @@ public class JdbcHibernateInitApplication {
     try (Session session = sessionFactory.openSession()) {
       transaction = session.beginTransaction();
 
-//      UserDetails userDetails = new UserDetails(null, "Ola", "123123123");
+//      UserDetails userDetails = new UserDetails(null, "Ola", "123123123", null);
 //      final User user = new User("ala", "Ala", "Alanska", "ala@test.com", userDetails);
 //      session.persist(user);
 

@@ -1,8 +1,6 @@
 package com.example.jdbchibernateinit;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -23,6 +21,10 @@ public class UserDetails {
     private String phoneNumber;
 
     // userDetails - NAZWA POLA w obiekcie User
+    // relacja jest dwustronna - problem podczas generowania metod toString, equals i hashcode -> StackOverflow
+    // rozw - po 1 stronie rozerwać niekonczaca sie pętle
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToOne(mappedBy = "userDetails")
     private User user;
 }
