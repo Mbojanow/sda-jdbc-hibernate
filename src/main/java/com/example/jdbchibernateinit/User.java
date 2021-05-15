@@ -32,4 +32,9 @@ public class User {
     @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Product> products;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(mappedBy = "users")
+    private List<Group> groups;
 }

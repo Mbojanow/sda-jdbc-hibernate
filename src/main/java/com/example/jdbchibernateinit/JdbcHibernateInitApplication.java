@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
 import java.util.Optional;
 
 public class JdbcHibernateInitApplication {
@@ -42,6 +43,15 @@ public class JdbcHibernateInitApplication {
 
       UserRepository userRepository = new UserRepository(session);
       final Optional<User> user = userRepository.findByIdWithProducts("Michal");
+
+      User user2 = new User("ola2", "Ola", "Ola", "ola@test.com", null, null, null);
+      session.persist(user2);
+      Group group = new Group(null, "g2", "group2", List.of(user2));
+      session.persist(group);
+
+      if (user2.getGroups() == null) {
+        System.out.println("User2 groups is null");
+      }
 
       transaction.commit();
     } catch (Exception e) {
