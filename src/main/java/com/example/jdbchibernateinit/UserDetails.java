@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "users_details")
 @Data
@@ -24,4 +21,8 @@ public class UserDetails {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    // userDetails - NAZWA POLA w obiekcie User
+    @OneToOne(mappedBy = "userDetails")
+    private User user;
 }
