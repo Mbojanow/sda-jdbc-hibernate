@@ -35,12 +35,16 @@ public class JdbcHibernateInitApplication {
 //      // 1 to 1 - hibernate jest 'sprytny' i sam pobiera zależną encję;
 //      userRepository.findById("ala");
 
-      User user = new User("Michal", "Michal", "Michal", "michal@test.com", null, new ArrayList<>());
-      Product product = new Product("p1", "Product 1");
-      session.persist(product);
-      // powiązanie user <-> product
-      user.setProducts(List.of(product));
-      session.persist(user);
+//      User user = new User("Michal", "Michal", "Michal", "michal@test.com", null, new ArrayList<>());
+//      Product product = new Product("p1", "Product 1");
+//      session.persist(product);
+//      // powiązanie user <-> product
+//      user.setProducts(List.of(product));
+//      session.persist(user);
+
+      final User user = session.find(User.class, "Michal");
+      final List<Product> products = user.getProducts();
+      System.out.println(products);
 
       transaction.commit();
     } catch (Exception e) {

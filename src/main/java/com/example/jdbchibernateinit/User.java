@@ -30,7 +30,7 @@ public class User {
     private UserDetails userDetails;
 
     //user może mieć wiele produktów
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private List<Product> products;
 }
