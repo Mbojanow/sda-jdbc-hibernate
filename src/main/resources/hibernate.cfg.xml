@@ -11,6 +11,5 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-<!-- <mapping class="com.example.jdbchibernateinit.Product"/>-->
     </session-factory>
 </hibernate-configuration>
