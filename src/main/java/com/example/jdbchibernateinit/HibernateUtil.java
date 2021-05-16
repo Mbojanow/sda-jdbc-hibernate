@@ -1,5 +1,7 @@
 package com.example.jdbchibernateinit;
 
+import com.example.jdbchibernateinit.domain.SdaCourse;
+import com.example.jdbchibernateinit.domain.Technology;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
@@ -15,6 +17,8 @@ import java.util.function.Function;
 public class HibernateUtil {
 
     private static final SessionFactory SESSION_FACTORY = new Configuration()
+            .addAnnotatedClass(SdaCourse.class)
+            .addAnnotatedClass(Technology.class)
             .configure("hibernate.cfg.xml")
             .buildSessionFactory();
 
